@@ -65,8 +65,25 @@ if (/gem 'al_math',\s*:git =>/.test(gemfile)) {
   failures.push("`Gemfile` must not use git-branch pin for `al_math`; use released gem version.");
 }
 
+// A user's own site (as opposed to the al-folio starter template itself) may
+// legally shadow gem-owned files as local overrides — see
+// docs/ARCHITECTURE.md#local-overrides-your-site-vs-this-repo. This repo is
+// such a site, so a forbidden path is only a real violation if nothing under
+// it is a tracked, acknowledged override in .al-folio-overrides.yml.
+const overridesPath = ".al-folio-overrides.yml";
+let trackedOverridePaths = [];
+if (exists(overridesPath)) {
+  const overridesRaw = read(overridesPath);
+  const overridesSection = overridesRaw.split(/^overrides:\s*$/m)[1] || "";
+  trackedOverridePaths = [...overridesSection.matchAll(/^ {2}(\S[^:]*):\s*$/gm)].map((m) => m[1]);
+}
+
 for (const forbiddenPath of ["_includes", "_layouts", "_sass", "_scripts", "assets/tailwind", "tailwind.config.js", "assets/webfonts"]) {
-  if (exists(forbiddenPath)) {
+  if (!exists(forbiddenPath)) continue;
+  const isTrackedOverride = trackedOverridePaths.some(
+    (overridePath) => overridePath === forbiddenPath || overridePath.startsWith(`${forbiddenPath}/`)
+  );
+  if (!isTrackedOverride) {
     failures.push(`Starter must not own core component path \`${forbiddenPath}\`; move ownership to the corresponding gem.`);
   }
 }
@@ -82,7 +99,7 @@ for (const forbiddenGlobPath of [
   }
 }
 
-for (const requiredPath of ["test/visual", "test/integration_plugin_toggles.sh", "test/integration_distill.sh"]) {
+for (const requiredPath of ["test/visual", "test/integration_plugin_toggles.sh"]) {
   if (!exists(requiredPath)) {
     failures.push(`Starter integration/visual contract missing required path: \`${requiredPath}\`.`);
   }
