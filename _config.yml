@@ -216,7 +216,6 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - LICENSE
-  - lighthouse_results/
   - package.json
   - package-lock.json
   - _pages/team_guerrero.md
