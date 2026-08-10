@@ -1,0 +1,64 @@
+---
+layout: page
+---
+<div class="post">
+  <article>
+    {% if page.profile %}
+      {% assign profile = page.profile %}
+      <div class="profile-header">
+        <div class="profile float-{% if profile.align == 'left' %}left{% else %}right{% endif %}">
+          {% if profile.image %}
+            {% assign profile_image_path = profile.image | prepend: 'assets/img/' %}
+            {% if profile.image_circular %}
+              {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
+            {% else %}
+              {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
+            {% endif %}
+            {% capture sizes %}(min-width: 576px) 30vw, 95vw{% endcapture %}
+            {% include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=profile.image %}
+          {% endif %}
+        </div>
+
+        <div class="profile-bio">
+          {% if profile.more_info %}
+            <div class="more-info">{{ profile.more_info }}</div>
+          {% endif %}
+          {% if profile.content %}
+            {% capture profile_content %}{% include_relative {{ profile.content }} %}{% endcapture %}
+            {{ profile_content | markdownify }}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.team %}
+      <hr class="team-divider">
+      <div class="team-grid">
+        {% for member in page.team %}
+          <div class="team-member">
+            {% if member.image %}
+              {% assign member_image_path = member.image | prepend: 'assets/img/' %}
+              {% capture sizes %}(min-width: 576px) 45vw, 95vw{% endcapture %}
+              {% include figure.liquid loading="eager" path=member_image_path class="img-fluid z-depth-1 rounded" sizes=sizes alt=member.name %}
+            {% endif %}
+            <div class="team-member-name">{{ member.name }}</div>
+            <div class="team-member-position">{{ member.position }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if page.former_members %}
+      <hr class="team-divider">
+      <h2>Former lab members</h2>
+      <ul class="former-members-list">
+        {% for person in page.former_members %}
+          <li>{{ person.name }}, {{ person.position }}, {{ person.years }}</li>
+        {% endfor %}
+      </ul>
+      <hr class="team-divider">
+    {% endif %}
+
+    {{ content }}
+  </article>
+</div>

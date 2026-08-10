@@ -53,9 +53,7 @@ npm ci
 npm run lint:prettier
 npm run lint:style-contract
 bundle exec jekyll build --baseurl /al-folio
-bash test/integration_comments.sh
 bash test/integration_plugin_toggles.sh
-bash test/integration_distill.sh
 bash test/integration_bootstrap_compat.sh
 bash test/integration_upgrade_cli.sh
 bash test/integration_css_minify.sh
@@ -71,7 +69,7 @@ docker compose logs --tail=80
 docker compose down
 ```
 
-All seven `test/integration_*.sh` scripts are gated by `unit-tests.yml`; run the ones your change touches. Docker note: v1 uses `/srv/jekyll/bin/entry_point.sh` and serves from container-local `/tmp/_site` to avoid host bind-mount write deadlocks.
+The remaining `test/integration_*.sh` scripts (`plugin_toggles`, `bootstrap_compat`, `upgrade_cli`, `css_minify`, `new_plugins`) are gated by `unit-tests.yml`; run the ones your change touches. `comments` and `distill` were removed along with the demo blog posts they depended on. Docker note: v1 uses `/srv/jekyll/bin/entry_point.sh` and serves from container-local `/tmp/_site` to avoid host bind-mount write deadlocks.
 
 ## Before you open a PR
 

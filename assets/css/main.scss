@@ -1,0 +1,193 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+/* Built-in Sass modules you'll likely use across partials */
+@use "sass:math";
+@use "sass:string";
+
+/* Configure your design tokens BEFORE loading any of your partials.
+   Make sure `_sass/_variables.scss` declares `$max-content-width: 72rem !default;` */
+@use "variables" with (
+  $max-content-width: {{ site.max_width | default:  "930px" }}
+);
+
+/* Your project partials — convert these files to `@use "variables";`
+   (or `@use "variables" as *;`) inside each file and qualify variables if needed. */
+@use "themes";
+@use "layout";
+
+// Core styles organized by usage
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "publications";
+@use "components";
+@use "utilities";
+
+// Other specialized styles
+@use "tabs";
+@use "teachings";
+@use "typograms";
+
+// Site fonts: Manrope for body text, Major Mono Display for headings/titles.
+// Loaded after tailwind.css in <head>, so these win the cascade for the
+// shared selectors (body, h1-h6, .post-title, .navbar-brand.title).
+//
+// Also the site-wide background image: fixed and covering every page, with
+// the content card (.post — the wrapper every layout uses) given a
+// frosted-glass treatment so it reads over the image.
+body {
+  font-family: "Manrope", sans-serif;
+  background-image: url("{{ '/assets/img/measuring_earth_upscaled.jpg' | relative_url }}");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.post {
+  background-color: color-mix(in srgb, var(--global-card-bg-color) 55%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.post-title,
+.navbar-brand.title {
+  font-family: "Major Mono Display", monospace;
+  font-weight: 500;
+}
+
+// Site brand name in the nav (shown on every non-home page).
+.navbar-brand.title {
+  font-weight: 700;
+}
+
+// Hyperlink color in light/day mode only. theme.js always sets
+// data-theme explicitly to "light" or "dark" (never leaves it unset), so
+// this selector reliably excludes dark mode, which keeps its own
+// --global-theme-color (cyan) accent.
+html[data-theme="light"] a,
+html[data-theme="light"] table.table a {
+  color: #663399;
+}
+
+html[data-theme="light"] a:hover,
+html[data-theme="light"] table.table a:hover {
+  color: #663399;
+}
+
+// The gem's active/hover nav-link rules are more specific
+// (.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link), so the
+// generic `a` override above loses to them on specificity even though it
+// loads later — hence the active page link kept its old purple. !important
+// sidesteps the specificity fight rather than chasing it with more classes.
+html[data-theme="light"] .navbar-nav .nav-item.active > .nav-link,
+html[data-theme="light"] .navbar-nav .nav-item .nav-link:hover {
+  color: #663399 !important;
+}
+
+// Frosted-glass navbar, site-wide. On pages with a background image (home,
+// people) this lets the image read through behind the fixed navbar instead
+// of stopping at a solid bar. On plain pages it blends into the ordinary
+// page background, so it's a no-op there.
+.navbar {
+  background-color: color-mix(in srgb, var(--global-bg-color) 55%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 1;
+}
+
+// Research page: project card titles default to 2rem, which reads very
+// large in the wide monospace Major Mono Display face used for headings.
+.card-title {
+  font-size: 1.25rem;
+}
+
+// People page: the PI photo/more-info sits beside the bio text (not wrapped
+// around it), a responsive two-column grid for the rest of the current team,
+// and one-line former-member entries.
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.profile-header .profile {
+  margin: 0;
+  width: 100%;
+}
+
+.profile-header .profile-bio {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.more-info p {
+  margin: 0.5em 0;
+}
+
+.more-info strong {
+  font-weight: 700;
+}
+
+@media (min-width: 576px) {
+  .profile-header .profile {
+    width: 30%;
+    flex: 0 0 30%;
+  }
+}
+
+hr.team-divider {
+  clear: both;
+  margin: 2rem 0;
+  border-top: 1px solid var(--global-divider-color);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 576px) {
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-member img {
+  aspect-ratio: 1 / 1;
+  width: 90%;
+  height: auto;
+  object-fit: cover;
+}
+
+.team-member-name {
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.former-members-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.former-members-list li {
+  padding: 0.25rem 0;
+}
