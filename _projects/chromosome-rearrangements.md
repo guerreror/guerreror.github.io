@@ -2,7 +2,7 @@
 layout: page
 title: Chromosome rearrangements
 description: Theoretical and statistical frameworks for testing hypotheses about polymorphic chromosome inversions
-img: assets/img/fusions.png 
+img: assets/img/fusions.png
 importance: 2
 category: research
 ---

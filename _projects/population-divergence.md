@@ -2,7 +2,7 @@
 layout: page
 title: Population divergence and speciation
 description: Genetic signatures of speciation and antagonistic interactions underlying hybrid incompatibility
-img: assets/img/speciation.png 
+img: assets/img/speciation.png
 importance: 2
 category: research
 ---

@@ -7,11 +7,11 @@ overrides:
     upstream_path: _layouts/profiles.liquid
     upstream_sha256: 5f8524d6b3df36be2bf31341db03cd075de93fb3aed4ee34437d2d07015b84db
     local_sha256: c0e638a62f26d61d12eceb7dd06aafa1c7aa1b52c1ae17cf716fa3b5363458cb
-    acknowledged_at: '2026-08-07'
+    acknowledged_at: "2026-08-07"
   assets/css/main.scss:
     owner: al_folio_core
     gem_version: 1.0.15
     upstream_path: assets/css/main.scss
     upstream_sha256: 437c6c911c596391413e435dc0ea7095e682e85c572c1fd3fff69f9597455b3e
     local_sha256: ae53035f55b7986906a7fac98af933b1b05bad62531c3efe4d1467713dc27d3a
-    acknowledged_at: '2026-08-08'
+    acknowledged_at: "2026-08-08"
