@@ -296,8 +296,9 @@ Build and deployment:
 
 - `deploy.yml`: builds the site and deploys it to GitHub Pages (the `gh-pages` branch)
 - `render-cv.yml`: regenerates your CV PDF with [RenderCV](https://github.com/rendercv/rendercv) when `_data/cv.yml` or the files under `assets/rendercv/` change
-- `update-citations.yml`: runs `bin/update_scholar_citations.py` on a schedule to refresh `_data/citations.yml` with Google Scholar citation counts. See [Setting up a Personal Access Token (PAT) for Google Scholar Citation Updates](CUSTOMIZE.md#setting-up-a-personal-access-token-pat-for-google-scholar-citation-updates)
 - `update-tocs.yml`: regenerates the `<!--ts-->…<!--te-->` table of contents blocks in changed Markdown files
+
+Google Scholar citation counts (`_data/citations.yml`) are refreshed by running `python3 bin/update_scholar_citations.py` manually rather than on a schedule — GitHub Actions runner IPs get throttled by Google Scholar's scraping defenses too unreliably for a cron job to be worth it.
 
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [After I create a new repository from this template and setup the repo, I get a deployment error. Isn't the website supposed to correctly deploy automatically?](#after-i-create-a-new-repository-from-this-template-and-setup-the-repo-i-get-a-deployment-error-isnt-the-website-supposed-to-correctly-deploy-automatically)
