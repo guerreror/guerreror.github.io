@@ -298,8 +298,6 @@ Build and deployment:
 - `render-cv.yml`: regenerates your CV PDF with [RenderCV](https://github.com/rendercv/rendercv) when `_data/cv.yml` or the files under `assets/rendercv/` change
 - `update-tocs.yml`: regenerates the `<!--ts-->…<!--te-->` table of contents blocks in changed Markdown files
 
-Google Scholar citation counts (`_data/citations.yml`) are refreshed by running `python3 bin/update_scholar_citations.py` manually rather than on a schedule — GitHub Actions runner IPs get throttled by Google Scholar's scraping defenses too unreliably for a cron job to be worth it.
-
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [After I create a new repository from this template and setup the repo, I get a deployment error. Isn't the website supposed to correctly deploy automatically?](#after-i-create-a-new-repository-from-this-template-and-setup-the-repo-i-get-a-deployment-error-isnt-the-website-supposed-to-correctly-deploy-automatically)
   - [I am using a custom domain (e.g., foo.com). My custom domain becomes blank in the repository settings after each deployment. How do I fix that?](#i-am-using-a-custom-domain-eg-foocom-my-custom-domain-becomes-blank-in-the-repository-settings-after-each-deployment-how-do-i-fix-that)
