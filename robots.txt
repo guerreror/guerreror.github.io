@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://guerreror.github.io/sitemap.xml
+Sitemap: https://rguerrer.org/sitemap.xml
